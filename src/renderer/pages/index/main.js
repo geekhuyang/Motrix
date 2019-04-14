@@ -12,6 +12,7 @@ import store from '@/store'
 import { getLocaleManager } from '@/components/Locale'
 import Icon from '@/components/Icons/Icon'
 import Msg from '@/components/Msg'
+import { getLangDirection } from '@shared/utils'
 
 import '@/components/Theme/Index.scss'
 
@@ -26,6 +27,7 @@ function init (config) {
   const { locale } = config
   const localeManager = getLocaleManager()
   localeManager.changeLanguageByLocale(locale)
+  const dir = getLangDirection(locale)
 
   Vue.use(VueI18Next)
   const i18n = new VueI18Next(localeManager.getI18n())
@@ -51,7 +53,7 @@ function init (config) {
     router,
     store,
     i18n,
-    template: '<App/>'
+    template: `<App class="${locale} ${dir}" />`
   }).$mount('#app')
 
   setTimeout(() => {
